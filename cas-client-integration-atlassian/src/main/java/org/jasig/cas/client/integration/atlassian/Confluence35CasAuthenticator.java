@@ -18,8 +18,6 @@
  */
 package org.jasig.cas.client.integration.atlassian;
 
-import com.atlassian.confluence.event.events.security.LoginEvent;
-import com.atlassian.confluence.event.events.security.LoginFailedEvent;
 import com.atlassian.confluence.user.ConfluenceAuthenticator;
 import com.atlassian.seraph.auth.AuthenticatorException;
 import com.atlassian.seraph.auth.LoginReason;
@@ -70,15 +68,15 @@ public final class Confluence35CasAuthenticator extends ConfluenceAuthenticator 
                 putPrincipalInSessionContext(request, user);
                 getElevatedSecurityGuard().onSuccessfulLoginAttempt(request, username);
                 // Firing this event is necessary to ensure the user's personal information is initialised correctly.
-                getEventPublisher().publish(
-                        new LoginEvent(this, username, request.getSession().getId(), remoteHost, remoteIP));
+//                getEventPublisher().publish(
+//                        new LoginEvent(this, username, request.getSession().getId(), remoteHost, remoteIP));
                 LoginReason.OK.stampRequestResponse(request, response);
                 LOGGER.debug("Logging in [{}] from CAS.", username);
             } else {
                 LOGGER.debug("Failed logging [{}] from CAS.", username);
                 getElevatedSecurityGuard().onFailedLoginAttempt(request, username);
-                getEventPublisher().publish(
-                        new LoginFailedEvent(this, username, request.getSession().getId(), remoteHost, remoteIP));
+//                getEventPublisher().publish(
+//                        new LoginFailedEvent(this, username, request.getSession().getId(), remoteHost, remoteIP));
             }
             return user;
         }
